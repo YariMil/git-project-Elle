@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class HashAndAdd {
 
@@ -75,6 +76,60 @@ public class HashAndAdd {
         System.out.println();
 
         return HexFormat.of().formatHex(hash);
+    }
+
+        public static String hashContent(String content) {
+
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("SHA-1");
+        } catch(NoSuchAlgorithmException e) {
+            throw new IllegalStateException("sha1 not avalible", e);
+        }
+        byte[] hash = digest.digest(content.getBytes());
+        System.out.println();
+
+        return HexFormat.of().formatHex(hash);
+    }
+
+    public static String createTree(ArrayList<String> workingList, String dirPath) throws IOException {
+        ArrayList<String> kids = new ArrayList<String>();
+
+        for (String line : workingList) {
+            String[] listParts = line.split(" ", 3);
+            String listPath = listParts[2];
+            if (getParentDir(listPath).equals(dirPath)) { 
+                String fileName = listPath.substring(listPath.lastIndexOf('/') + 1);
+                kids.add(listParts[0] + " " + listParts[1] + " " + fileName);
+            }
+        }
+
+        StringBuilder content = new StringBuilder();
+        for (String kid : kids) { 
+            content.append(kid).append("\n");
+        }
+
+        String contentString = content.toString();
+        String hash = hashContent(contentString);
+
+        FileWriter writeToTree = new FileWriter("git/objects/" + hash + ".txt");
+        writeToTree.write(contentString);
+        writeToTree.close();
+
+        return hash;
+    }
+
+    public static String getParentDir(String filePath) {
+        int index = -1;
+        for (int i = 0; i < filePath.length(); i++) {
+            if (filePath.charAt(i) == '/') { 
+                index = i;
+            }
+        }
+        if (index == -1) { 
+            return "";
+        }
+        return filePath.substring(0, index);
     }
     
 }
