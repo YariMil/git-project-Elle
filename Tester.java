@@ -12,7 +12,6 @@ public class Tester {
         HashAndAdd.addToIndex("myProgram/docs/World.txt");
         HashAndAdd.addToIndex("myProgram/README.md");
         HashAndAdd.addToIndex("myProgram/World.txt");
-        // Note fix the extra new line in index
         System.out.println(TreeCreation.buildWorkingList());
         System.out.println(TreeCreation.createTreeFromIndex());
         

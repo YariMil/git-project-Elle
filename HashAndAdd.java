@@ -19,6 +19,7 @@ public class HashAndAdd {
         try {
             // This boolean checks if we rewrote a line on the index
             boolean rewroteIndex = false;
+            String filePathToWrite = filename.substring(filename.lastIndexOf(" ") + 1);
             createBlob(filename);
             String hash = new String();
             hash = hashFile(filename);
@@ -30,7 +31,8 @@ public class HashAndAdd {
             String oneLine = br.readLine();
             String newLine = hash + " " + filename;
             while (oneLine != null) {
-                if (oneLine.equals(newLine)) {
+                String fileInLine = oneLine.substring(newLine.lastIndexOf(" ") + 1);
+                if (filePathToWrite.equals(fileInLine)) {
                     oneLine = newLine;
                     rewroteIndex = true;
                 }
