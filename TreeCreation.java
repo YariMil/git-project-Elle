@@ -12,14 +12,14 @@ public class TreeCreation {
     public static String createTreeFromIndex() throws IOException {
         ArrayList<String> workingList = buildWorkingList();
 
-        String dir = findDeepestDirectory(workingList);
-        while (!dir.equals("")) {
-            String hash = createTree(workingList, dir);
-            workingList = collapse(workingList, dir, hash);
-            dir = findDeepestDirectory(workingList);
+        String directory = findDeepestDirectory(workingList);
+        while (!directory.equals("")) {
+            String hash = createTree(workingList, directory);
+            workingList = collapseIntoSingleTreeEntry(workingList, directory, hash);
+            directory = findDeepestDirectory(workingList);
         }
 
-        return (createTree(workingList, dir));
+        return (createTree(workingList, directory));
     }
 
     public static String findDeepestDirectory(ArrayList<String> workingList) {
@@ -45,7 +45,7 @@ public class TreeCreation {
         return deepest;
     }
 
-    public static void addSorted(ArrayList<String> list, String entry) {
+    public static void addToSortedWorkingList(ArrayList<String> list, String entry) {
         String path = entry.split(" ", 3)[2];
         int index = list.size();
         for (int i = 0; i < list.size(); i++) {
@@ -68,7 +68,7 @@ public class TreeCreation {
             line = line.trim();
             String listEntry = "blob " + line;
             if (!workingList.contains(listEntry)) {
-                addSorted(workingList, listEntry);
+                addToSortedWorkingList(workingList, listEntry);
             }
         }
         br.close();
@@ -90,27 +90,27 @@ public class TreeCreation {
     }
 
     public static String createTree(ArrayList<String> workingList, String dirPath) throws IOException {
-        ArrayList<String> kids = new ArrayList<String>();
+        ArrayList<String> dirPathInstances = new ArrayList<String>();
 
-        for (String line : workingList) {
-            String[] listParts = line.split(" ", 3);
+        for (String workingListLine : workingList) {
+            String[] listParts = workingListLine.split(" ", 3);
             String listPath = listParts[2];
             if (getParentDir(listPath).equals(dirPath)) {
                 String fileName = listPath.substring(listPath.lastIndexOf('/') + 1);
-                kids.add(listParts[0] + " " + listParts[1] + " " + fileName);
+                dirPathInstances.add(listParts[0] + " " + listParts[1] + " " + fileName);
             }
         }
 
-        StringBuilder content = new StringBuilder();
-        for (int i = 0; i < kids.size(); i++) {
-            String kid = kids.get(i);
-            content.append(kid);
-            if (i != kids.size() - 1) {
-                content.append("\n");
+        StringBuilder treeContent = new StringBuilder();
+        for (int i = 0; i < dirPathInstances.size(); i++) {
+            String kid = dirPathInstances.get(i);
+            treeContent.append(kid);
+            if (i != dirPathInstances.size() - 1) {
+                treeContent.append("\n");
             }
         }
 
-        String contentString = content.toString();
+        String contentString = treeContent.toString();
         String hash = HashAndAdd.hashContent(contentString);
 
         FileWriter writeToTree = new FileWriter("git/objects/" + hash);
@@ -120,7 +120,7 @@ public class TreeCreation {
         return hash;
     }
 
-    public static ArrayList<String> collapse(ArrayList<String> workingList, String directory, String hash) { // collapses
+    public static ArrayList<String> collapseIntoSingleTreeEntry(ArrayList<String> workingList, String directory, String hash) { // collapses
                                                                                                              // into
                                                                                                              // tree
         ArrayList<String> newWorkingList = new ArrayList<String>();
@@ -132,7 +132,7 @@ public class TreeCreation {
             }
         }
 
-        addSorted(newWorkingList, "tree " + hash + " " + directory);
+        addToSortedWorkingList(newWorkingList, "tree " + hash + " " + directory);
         return newWorkingList;
     }
 
