@@ -32,7 +32,7 @@ public class Git{
                 counter+=1;
             }
 
-            File index = new File("git/index.txt");
+            File index = new File("git/index");
             try {
                 if(!index.createNewFile()){
                     counter+=1;
@@ -43,7 +43,7 @@ public class Git{
             }
 
             
-            File HEAD = new File("git/HEAD.txt");
+            File HEAD = new File("git/HEAD");
             try {
                 if(!HEAD.createNewFile()){
                     counter+=1;

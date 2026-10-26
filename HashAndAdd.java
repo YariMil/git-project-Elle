@@ -23,7 +23,7 @@ public class HashAndAdd {
             createBlob(filename);
             String hash = new String();
             hash = hashFile(filename);
-            File index = new File("git/index.txt");
+            File index = new File("git/index");
 
             StringBuilder content = new StringBuilder();
             BufferedReader br = new BufferedReader(new FileReader(index));
@@ -56,8 +56,8 @@ public class HashAndAdd {
 
     public static void createBlob(String fileName) throws IOException {
         String hash = hashFile(fileName);
-        File blob = new File("git/objects/" + hash + ".txt");
-        FileWriter blobWriter = new FileWriter("git/objects/" + hash + ".txt");
+        File blob = new File("git/objects/" + hash);
+        FileWriter blobWriter = new FileWriter("git/objects/" + hash);
         String content = new String(Files.readAllBytes(Paths.get(fileName)));
         blobWriter.write(content);// do file content;
         blobWriter.close();
