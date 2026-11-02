@@ -23,7 +23,7 @@ public class HashAndAdd {
             createBlob(filename);
             String hash = new String();
             hash = hashFile(filename);
-            File index = new File("git/indexg");
+            File index = new File("git/index");
 
             StringBuilder content = new StringBuilder();
             BufferedReader br = new BufferedReader(new FileReader(index));
