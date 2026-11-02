@@ -30,7 +30,7 @@ public class Tester {
         bw.write("This is amazing");
         bw.close();
         HashAndAdd.addToIndex("myProgram/Oh.txt");
-        Git.commit("Yari", "This is test commit 2");
+        Git.commit("", "");
     } catch (Exception e) {
 
     }

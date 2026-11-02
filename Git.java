@@ -62,6 +62,9 @@ public class Git {
     }
 
     public static void commit(String author, String message) {
+        if (author == null || message == null) {
+            throw new IllegalArgumentException("Neither author nor message can be null!");
+        }
         try {
             String rootTreeHash = TreeCreation.createTreeFromIndex();
             StringBuilder commitContent = new StringBuilder("tree: " + rootTreeHash + "\n");
