@@ -9,8 +9,6 @@ public class Tester {
     public static void main(String[] args) throws IOException {
 
         GitWrapper.init();
-        GitWrapper.add("myProgram/jabba.txt");
-        GitWrapper.add("myProgram/hello.txt");
         GitWrapper.add("myProgram/docs/Hello.txt");
         GitWrapper.add("myProgram/docs/World.txt");
         GitWrapper.add("myProgram/README.md");

@@ -61,8 +61,6 @@ public class HashAndAdd {
         String content = new String(Files.readAllBytes(Paths.get(fileName)));
         blobWriter.write(content);// do file content;
         blobWriter.close();
-        System.out.println(blob);
-        System.out.println(content);
 
     }
 
@@ -80,7 +78,6 @@ public class HashAndAdd {
             throw new IllegalStateException("sha1 not avalible", e);
         }
         byte[] hash = digest.digest(fileBytes);
-        System.out.println();
 
         return HexFormat.of().formatHex(hash);
     }
@@ -94,7 +91,6 @@ public class HashAndAdd {
             throw new IllegalStateException("sha1 not avalible", e);
         }
         byte[] hash = digest.digest(content.getBytes());
-        System.out.println();
 
         return HexFormat.of().formatHex(hash);
     }

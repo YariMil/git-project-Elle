@@ -130,8 +130,6 @@ public class Git {
                     int lastSpace = line.lastIndexOf(" ");
                     String fileHash = line.substring(firstSpace + 1, lastSpace);
                     String fileName = line.substring(lastSpace + 1);
-                    System.out.println(fileName);
-                    System.out.println(dirPath + fileName);
                     restoreFile(dirPath + fileName, fileHash);
                 } else if (line.indexOf("tree") != -1) {
                     // tree file
@@ -141,8 +139,6 @@ public class Git {
                     String dirName = line.substring(lastSpace + 1);
                     File newDir = new File(dirPath + dirName);
                     newDir.mkdir();
-                    // br.close();
-                    // return;
                     restoreDirectory(dirPath + dirName + "/", dirHash);
                 } else {
                     br.close();
