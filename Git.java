@@ -105,9 +105,9 @@ public class Git {
         }
     }
 
-    public static void deleteRepoFiles(String rootDirPath) {
+    public static void deleteRepoFiles(String dirPath) {
         // Deletes files so they can be refilled by restoreHistory
-        File rootDir = new File(rootDirPath);
+        File rootDir = new File(dirPath);
         File[] files = rootDir.listFiles();
         for (int i = 0; i < files.length; i++) {
             if (files[i].isDirectory()) {

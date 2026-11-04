@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 
 public class GitWrapper {
@@ -18,6 +19,12 @@ public class GitWrapper {
      * @param filePath The path to the file to stage.
      */
     public static void add(String filePath) throws IOException {
+        File f = new File(filePath);
+        if (!f.exists()) {
+            throw new IllegalArgumentException("File doesn't exist!");
+        } else if (f.isDirectory()) {
+            throw new IllegalArgumentException("Path cannot be a directory!");
+        }
         HashAndAdd.addToIndex(filePath);
     }
 
