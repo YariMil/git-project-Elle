@@ -99,7 +99,7 @@ public class Git {
             rootHash = rootHash.substring(rootHash.indexOf(" ") + 1);
             br.close();
             deleteRepoFiles("myProgram");
-            restoreDirectory("myProgram/", rootHash);
+            restoreDirectory("", rootHash);
         } catch (Exception e) {
             System.out.println("Error in restoreHistory: " + e.getMessage());
         }
@@ -130,16 +130,20 @@ public class Git {
                     int lastSpace = line.lastIndexOf(" ");
                     String fileHash = line.substring(firstSpace + 1, lastSpace);
                     String fileName = line.substring(lastSpace + 1);
-                    restoreFile(dirPath + "/" + fileName, fileHash);
+                    System.out.println(fileName);
+                    System.out.println(dirPath + fileName);
+                    restoreFile(dirPath + fileName, fileHash);
                 } else if (line.indexOf("tree") != -1) {
                     // tree file
                     int firstSpace = line.indexOf(" ");
                     int lastSpace = line.lastIndexOf(" ");
                     String dirHash = line.substring(firstSpace + 1, lastSpace);
                     String dirName = line.substring(lastSpace + 1);
-                    File newDir = new File(dirPath + "/" + dirName);
+                    File newDir = new File(dirPath + dirName);
                     newDir.mkdir();
-                    restoreDirectory(dirPath + "/" + dirName, dirHash);
+                    // br.close();
+                    // return;
+                    restoreDirectory(dirPath + dirName + "/", dirHash);
                 } else {
                     br.close();
                     throw new IllegalStateException("Something went wrong during tree creation!");

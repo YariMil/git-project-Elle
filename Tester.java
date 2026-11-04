@@ -9,12 +9,12 @@ public class Tester {
     public static void main(String[] args) throws IOException {
 
         GitWrapper.init();
-        GitWrapper.add("myProgram/myProgram/jabba.txt");
-        GitWrapper.add("myProgram/myProgram/hello.txt");
-        GitWrapper.add("myProgram/myProgram/docs/Hello.txt");
-        GitWrapper.add("myProgram/myProgram/docs/World.txt");
-        GitWrapper.add("myProgram/myProgram/README.md");
-        GitWrapper.add("myProgram/myProgram/World.txt");
+        GitWrapper.add("myProgram/jabba.txt");
+        GitWrapper.add("myProgram/hello.txt");
+        GitWrapper.add("myProgram/docs/Hello.txt");
+        GitWrapper.add("myProgram/docs/World.txt");
+        GitWrapper.add("myProgram/README.md");
+        GitWrapper.add("myProgram/World.txt");
         // HashAndAdd.addToIndex("myProgram/docs/Check.txt");
         // ArrayList<String> workingList = TreeCreation.buildWorkingList();
         // for (String s : workingList) {
@@ -28,25 +28,28 @@ public class Tester {
         System.out.println("== EDGE CASE CHECKS ==");
         try {
             // GitWrapper.add("myProgram/ThisIsWrong.txt");
-            GitWrapper.add("myProgram/myProgram/docs");
+            GitWrapper.add("myProgram/docs");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("myProgram/myProgram/Oh.txt"));
-            bw.write("This is amazing");
-            GitWrapper.add("myProgram/myProgram/Oh.txt");
-            GitWrapper.commit("Yari", "Wow!");
-            bw.write(". Actually yes it is amazing.");
-            GitWrapper.add("myProgram/myProgram/Oh.txt");
-            GitWrapper.commit("Yari", "Wow!");
-            bw.close();
-            GitWrapper.checkout("12f5a9d66d601191351503d542a5ebacc30b0b45");
-            GitWrapper.checkout("dadc3173b126cbc610d6d70179c08844e2d405b9");
-            GitWrapper.checkout("12f5a9d66d601191351503d542a5ebacc30b0b45");
-            GitWrapper.checkout("dadc3173b126cbc610d6d70179c08844e2d405b9");
-        } catch (Exception e) {
 
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("myProgram/Oh.txt"));
+            bw.write("This is amazing");
+            bw.close();
+            GitWrapper.add("myProgram/Oh.txt");
+            GitWrapper.commit("Yari", "Wow!");
+            bw = new BufferedWriter(new FileWriter("myProgram/Oh.txt", true));
+            bw.write(". Actually yes it is amazing.");
+            bw.close();
+            GitWrapper.add("myProgram/Oh.txt");
+            GitWrapper.commit("Yari", "Wow!");
+            GitWrapper.checkout("1c25f54632bdfc1152d8cb2cc959d9427976701b");
+            GitWrapper.checkout("7267e5b68f9e6aa0e62e8e9f9e4daa0a8a13fad0");
+            GitWrapper.checkout("ca8e34c4708b3caa2bb75299c0fbc9a06ba1ba28");
+            GitWrapper.checkout("7267e5b68f9e6aa0e62e8e9f9e4daa0a8a13fad0");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }
